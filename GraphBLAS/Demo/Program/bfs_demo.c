@@ -57,6 +57,7 @@ int main (int argc, char **argv)
     int nthreads ;
     OK (GxB_Global_Option_get (GxB_GLOBAL_NTHREADS, &nthreads)) ;
     fprintf (stderr, "bfs_demo: nthreads %d\n", nthreads) ;
+    fprintf (stderr, "running ! \n");
 
     //--------------------------------------------------------------------------
     // read a matrix from stdin

@@ -92,6 +92,7 @@ GrB_Info tricount           // count # of triangles
     double t [2]            // t [0]: multiply time, t [1]: reduce time
 )
 {
+    printf("Tricount calling! \n");
 
     //--------------------------------------------------------------------------
     // check inputs
@@ -110,6 +111,7 @@ GrB_Info tricount           // count # of triangles
     GrB_Semiring semiring = GrB_PLUS_TIMES_SEMIRING_INT32 ;
     GrB_Type ctype = GrB_INT32 ;
 
+    printf("method = %d\n", method);
     switch (method)
     {
         case 0:  // minitri:    ntri = nnz (A*E == 2) / 3

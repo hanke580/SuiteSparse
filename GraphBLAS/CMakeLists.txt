@@ -384,6 +384,8 @@ endif ( )
 # add the threading library
 #-------------------------------------------------------------------------------
 
+target_link_libraries( graphblas kernel )
+
 if ( USE_OPENMP )
     # use OpenMP for user thread synchronization
     message ( STATUS "Using OpenMP to synchronize user threads" )
