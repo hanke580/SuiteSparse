@@ -4,14 +4,14 @@
 #define print_int(ptr, n, name) \
     printf("%s: ", name); \
     for(int i = 0; i<n; i++) { \
-        printf("\t%d\t", ptr[i]); \
+        printf("\t%d  ", ptr[i]); \
     } \
     printf("\n");
 
 #define print_long(ptr, n, name) \
     printf("%s: ", name); \
     for(int i = 0; i<n; i++) { \
-        printf("\t%ld\t", ptr[i]); \
+        printf("\t%ld  ", ptr[i]); \
     } \
     printf("\n");
 
