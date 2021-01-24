@@ -1,7 +1,33 @@
 #include "Kernels/spgemm.h"
 #include "../Include/GraphBLAS.h"
 #include "GB.h"
+#include <string.h>
+#define print_int(ptr, n, name) \
+    printf("%s: ", name); \
+    for(int i = 0; i<n; i++) { \
+        printf("\t%d  ", ptr[i]); \
+    } \
+    printf("\n");
 
+#define print_long(ptr, n, name) \
+    printf("%s: ", name); \
+    for(int i = 0; i<n; i++) { \
+        printf("\t%ld  ", ptr[i]); \
+    } \
+    printf("\n");
+
+void print_info(GrB_Matrix A, char name){
+    char ap[] = "A->p";
+    char ai[] = "A->i";
+    char ax[] = "A->x";
+    ap[0] = name;
+    ai[0] = name;
+    ax[0] = name;
+    print_long(A->p, A->plen+1, ap);
+    print_long(A->i, A->nzmax, ai);
+    int *Ax = static_cast<int*>(A->x);
+    print_int(Ax, A->nzmax, ax);
+}
 
 typedef int TYPE;
 
@@ -115,61 +141,9 @@ extern "C" GrB_Info GB_mxm_gpu
     
     int ifprint = 1;
     if(ifprint) {
-        printf("A->p\n");
-        for(int i = 0; i<A->plen+1; i++) {
-            printf("%ld\t", A->p[i]);
-        }
-        printf("\n");
-        printf("A->i\n");
-        for(int i = 0; i<A->nzmax; i++) {
-            printf("%ld\t", A->i[i]);
-        }
-        printf("\n");
-        printf("A->x\n");
-    
-        int *Ax = static_cast<int*>(A->x);
-        for(int i = 0; i<A->nzmax; i++) {
-            printf("%d\t", Ax[i]);
-        }
-        printf("\n");
-    
-        printf("B->p\n");
-        for(int i = 0; i<B->plen+1; i++) {
-            printf("%ld\t", B->p[i]);
-        }
-        printf("\n");
-    
-        printf("B->i\n");
-        for(int i = 0; i<B->nzmax; i++) {
-            printf("%ld\t", B->i[i]);
-        }
-        printf("\n");
-        printf("B->x\n");
-    
-        int *Bx = static_cast<int*>(B->x);
-        for(int i = 0; i<B->nzmax; i++) {
-            printf("%d\t", Bx[i]);
-        }
-        printf("\n");
-        printf("M->p\n");
-        for(int i = 0; i<M->plen+1; i++) {
-            printf("%ld\t", M->p[i]);
-        }
-        printf("\n");
-    
-        printf("M->i\n");
-        for(int i = 0; i<M->nzmax; i++) {
-            printf("%ld\t", M->i[i]);
-        }
-        printf("\n");
-        printf("M->x\n");
-    
-        int *Mx = static_cast<int*>(M->x);
-        for(int i = 0; i<M->nzmax; i++) {
-            printf("%d\t", Mx[i]);
-        }
-        printf("\n");
-    
+        print_info(A, 'A');
+        print_info(B, 'B');
+        print_info(M, 'C');
     }
     const int nt = 128;  // GrB_128
     if (M != NULL) {
